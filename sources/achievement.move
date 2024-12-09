@@ -20,6 +20,14 @@ public struct Achievement has key,store{
     image_url:String // 照片
 }
 
+public  fun balance(achievement: &mut Achievement):u64{
+    achievement.prize.value()
+}
+
+public entry fun prize_balance(achievement: &mut Achievement,_ctx:&mut TxContext):u64{
+    return achievement.balance()
+}
+
 public entry fun withdraw(achievement: &mut Achievement, amount: u64, ctx:&mut TxContext){
     assert!(achievement.owner==ctx.sender(),0x1);
     assert!(achievement.prize.value()>=amount,0x2);
